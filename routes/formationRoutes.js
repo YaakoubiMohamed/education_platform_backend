@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const formationController = require('../controllers/formationController');
+const { protect, restrictTo } = require('../middleware/auth');
 
 /**
  * Routes Formation
@@ -61,14 +62,14 @@ router.get('/:id', formationController.getFormationById);
 
 // POST /api/formations
 // Crée une nouvelle formation
-router.post('/', formationController.createFormation);
+router.post('/', protect, formationController.createFormation);
 
 // PUT /api/formations/:id
 // Met à jour une formation existante
-router.put('/:id', formationController.updateFormation);
+router.put('/:id', protect, formationController.updateFormation);
 
 // DELETE /api/formations/:id
-// Supprime une formation
-router.delete('/:id', formationController.deleteFormation);
+// Supprime une formation (Admin uniquement)
+router.delete('/:id', protect, restrictTo('admin'), formationController.deleteFormation);
 
 module.exports = router;

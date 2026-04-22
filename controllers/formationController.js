@@ -343,10 +343,22 @@ exports.updateFormation = async (req, res) => {
 /**
  * Supprimer une formation
  * DELETE /api/formations/:id
+ * 
+ * IMPORTANT: Seul les administrateurs peuvent supprimer une formation.
+ * Cette vérification est appliquée par le middleware restrictTo('admin')
+ * et doublée ici par défense en profondeur.
  */
 exports.deleteFormation = async (req, res) => {
   try {
     const { id } = req.params;
+
+    // Double-check: Ensure user is admin (middleware already enforces this)
+    if (!req.user || req.user.role !== 'admin') {
+      return res.status(403).json({
+        success: false,
+        message: 'Seul un administrateur peut supprimer une formation'
+      });
+    }
 
     const formation = await Formation.findById(id);
     if (!formation) {

@@ -143,7 +143,6 @@ const formationSchema = new mongoose.Schema({
 formationSchema.index({ categorie: 1 });
 formationSchema.index({ enseignant: 1 });
 formationSchema.index({ isActive: 1, isPublished: 1 });
-formationSchema.index({ slug: 1 }, { unique: true, sparse: true });
 formationSchema.index({ prix: 1 });
 formationSchema.index({ rating: -1 });
 formationSchema.index({ enrollmentCount: -1 });

@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const ApiError = require('../utils/ApiError');
-const Utilisateur = require('../models/Utilisateur');
+const Utilisateur = require('../models/utilisateur');
 
 /**
  * ===========================================
@@ -23,7 +23,7 @@ const Utilisateur = require('../models/Utilisateur');
  */
 exports.fakeAuthOptional = (req, res, next) => {
   // Ne pas remplacer si un JWT valide est présent
-  if (req.header('authorization') || req.cookies.accessToken) {
+  if (req.header('authorization') || (req.cookies && req.cookies.accessToken)) {
     return next();
   }
 

@@ -107,7 +107,6 @@ const categorieSchema = new mongoose.Schema({
 
 // Index
 categorieSchema.index({ nom: 1 });
-categorieSchema.index({ slug: 1 }, { unique: true, sparse: true });
 categorieSchema.index({ parent: 1 });
 categorieSchema.index({ isActive: 1 });
 categorieSchema.index({ isFeatured: 1 });

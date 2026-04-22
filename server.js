@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { connectDB } = require('./config/database');
+const errorHandler = require('./middleware/errorHandler');
 
 // Importation des routes
 const setupRoutes = require('./routes');
@@ -24,6 +25,9 @@ setupRoutes(app);
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
+
+// Gestionnaire d'erreurs global (doit etre apres les routes)
+app.use(errorHandler);
 
 // Démarrage du serveur
 const startServer = async () => {
